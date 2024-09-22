@@ -7,6 +7,17 @@ public class PessoaEleitora extends Pessoa {
 
   private String cpf;
 
+  /**
+   * Instantiates a new Pessoa eleitora.
+   *
+   * @param nome the nome
+   * @param cpf  the cpf
+   */
+  public PessoaEleitora(String nome, String cpf) {
+    super(nome);
+    this.cpf = cpf;
+  }
+
   public String getCpf() {
     return cpf;
   }
