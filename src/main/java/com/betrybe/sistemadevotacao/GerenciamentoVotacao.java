@@ -15,12 +15,11 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
 
   @Override
   public void cadastrarPessoaCandidata(String nome, int numero) {
-    PessoaCandidata candidata = pessoasCandidatas.stream()
+    Optional<PessoaCandidata> candidata = pessoasCandidatas.stream()
         .filter(num -> numero == num.getNumero())
-        .findAny()
-        .orElse(null);
+        .findAny();
 
-    if (candidata != null) {
+    if (candidata.isPresent()) {
       System.out.println("Número da pessoa candidata já utilizado!");
     } else {
       PessoaCandidata pessoa = new PessoaCandidata(nome, numero);
