@@ -1,7 +1,8 @@
 package com.betrybe.sistemadevotacao;
 
+import static java.lang.Math.round;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -54,9 +55,11 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
       Optional<PessoaCandidata> candidato = pessoasCandidatas.stream()
           .filter(num -> num.getNumero() == numeroPessoaCandidata)
           .findAny();
-
-      candidato.get().receberVoto();
+      candidato.ifPresent(PessoaCandidata::receberVoto);
       cpfsComputados.add(cpfPessoaEleitora);
+      if (candidato.isEmpty()) {
+        System.out.println("Candidato não cadastrado!");
+      }
     }
   }
 
@@ -65,8 +68,9 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
     if (cpfsComputados.isEmpty()) {
       System.out.println("É preciso ter pelo menos um voto para mostrar o resultado.");
     } else {
-      pessoasCandidatas.forEach(pessoa -> System.out.println("Nome: " + pessoa.getNome()
-          + " - " + pessoa.getVotos() + " ( " + pessoa.getVotos() / cpfsComputados.size()
+      pessoasCandidatas.forEach(p -> System.out.println("Nome: " + p.getNome() + " - "
+          + p.getVotos() + " votos " + "( " + Math.round(
+              ((double) p.getVotos() / cpfsComputados.size()) * 100)
           + "% )"));
       System.out.println("Total de votos: " + cpfsComputados.size());
     }
